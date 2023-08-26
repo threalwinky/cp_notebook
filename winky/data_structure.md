@@ -6,14 +6,15 @@
 
 ```cpp
 struct PS/*0-based*/{
-    vector<int> p;
-    PS(vector<int> a){
-        p.resize(a.size() + 1);
-        for (int i=1; i<=a.size(); i++){
+    using T = int;
+    vector<T> p;
+    PS(vector<T> a){
+        p.resize(a.size() + 1, 0);
+        for (T i=1; i<=a.size(); i++){
             p[i] = p[i-1] + a[i];
         }
     }
-    int sum(int l, int r){
+    T sum(T l, T r){
         return p[r] - p[l-1];
     }
 };
@@ -147,3 +148,41 @@ struct ST_w_lz/*0-based*/{
 ```
 
 ## Fenwick Tree
+
++ Description: Computes partial sums a[0] + a[1] + ... + a[pos - 1], and updates single elements a[i],
+taking the difference between the old and new value.
++ Initialize with a 0-based vector
++ FT.update : update all elements in range from l to r of vector to any value
++ FT.query : get partial sums a[0] + a[1] + ... + a[pos - 1]
++ FT.query_range : get partial sums a[l] + a[1] + ... + a[r]
++ Time complexity : O(log n)
+
+```cpp
+struct FT/*0-based*/{
+    using T = int;
+    vector<T> ft;
+    vector<T> org;
+    T orz;
+    FT(vector<T> v){
+        ft.resize(v.size());
+        org = v; orz = org.size();
+        for (int i=0; i<org.size(); i++){
+            update(i, org[i]);
+        }
+    }
+    void update(int pos, int val){
+        for (; pos < orz; pos|=pos+1) ft[pos] += val;
+    }
+    T query(T pos){
+        T sum = 0;
+        for (; pos > 0; pos&=pos-1){
+                cout << ft[pos]<< " ";
+                sum += ft[pos-1];
+        }
+        return sum;
+    }
+    T query_range(T l, T r){
+        return query(r) - query(l-1);
+    }
+};
+```
