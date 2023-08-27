@@ -176,7 +176,6 @@ struct FT/*0-based*/{
     T query(T pos){
         T sum = 0;
         for (; pos > 0; pos&=pos-1){
-                cout << ft[pos]<< " ";
                 sum += ft[pos-1];
         }
         return sum;
