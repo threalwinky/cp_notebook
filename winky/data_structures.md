@@ -143,8 +143,8 @@ struct ST_w_lz/*0-based*/{
 
 + Description: Segment tree with ability to add or set values of large intervals, and compute max of intervals.
 + Initialize with a 0-based vector
-+ ST.update : update one element of vector to any value
-+ ST.query : get range queries such as max query, sum query
++ STO.update : update one element of vector to any value
++ STO.query : get range queries such as max query, sum query
 + Time complexity : O(log n)
 + Space complexity : O(2*n)
 ```cpp
@@ -219,6 +219,11 @@ struct FT/*0-based*/{
 ```
 
 ## Disjoint Set Union
++ Description: Disjoint-set data structure link any pair of sets and check whether they are linked
++ Initialize with a size number
++ DSU.link : link two sets
++ DSU.check : check linked sets
++ Time complexity : O(	$\alpha$(n))
 
 ```cpp
 struct DSU{
