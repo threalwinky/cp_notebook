@@ -27,7 +27,7 @@ struct PS/*0-based*/{
 + ST.update : update one element of vector to any value
 + ST.query : get range queries such as max query, sum query
 + Time complexity : O(log n)
-+ 
+
 ```cpp
 struct ST/*0-based*/{
     using T = int;
@@ -141,9 +141,41 @@ struct ST_w_lz/*0-based*/{
 
 ## Segment Tree(Optimized space complexity)
 
-```
-
-
++ Description: Segment tree with ability to add or set values of large intervals, and compute max of intervals.
++ Initialize with a 0-based vector
++ ST.update : update one element of vector to any value
++ ST.query : get range queries such as max query, sum query
++ Time complexity : O(log n)
++ Space complexity : O(2*n)
+```cpp
+struct STO{
+    using T = int;
+    vector<T> st, org;
+    T orz, cns = INT_MIN;
+    T f(T a, T b){ return a > b ? a : b; }
+    STO(vector<T> v){
+        org = v;
+        orz = org.size();
+        st.resize(2*orz);
+        for (int i=1; i<=orz; i++){
+            update(i, org[i-1]);
+        }
+    }
+    void update(T pos, T val){
+        pos--;
+        for (st[pos += orz] = val; pos/=2;)
+            st[pos] = f(st[pos << 1], st[pos << 1 | 1]);
+    }
+    T query(T u, T v){
+        u--;
+        T res = cns;
+        for (u += orz, v += orz; u < v; u >>= 1, v >>= 1){
+            if (u & 1) res = f(res, st[u++]);
+            if (v & 1) res = f(res, st[--v]);
+        }
+        return res;
+    }
+};
 
 ```
 
