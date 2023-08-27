@@ -217,3 +217,21 @@ struct FT/*0-based*/{
     }
 };
 ```
+
+## Disjoint Set Union
+
+```cpp
+struct DSU{
+    using T = int;
+    vector<T> d;
+    DSU(T n){ d.resize(n, -1);}
+    inline T find(T u){ return d[u] < 0 ? u : d[u] = find(d[u]) ;}
+    void link(T u, T v){
+        u = find(u), v = find(v);
+        if (u == v) return;
+        if (d[u] > d[v]) swap(u, v);
+        d[u] += d[v], d[v] = u;
+    }
+    inline bool check(T u, T v){ return find(u) == find(v); }
+};
+```
