@@ -9,7 +9,7 @@ struct PS/*0-based*/{
     using T = int;
     vector<T> p;
     PS(vector<T> a){
-        p.resize(a.size() + 1, 0);
+        p.assign(a.size() + 1, 0);
         for (T i=1; i<=a.size(); i++){
             p[i] = p[i-1] + a[i];
         }
@@ -40,7 +40,7 @@ struct ST/*0-based*/{
         org.push_back(0);
         for(auto it : v) org.push_back(it);
         orz = v.size();
-        st.resize(4 * v.size());
+        st.assign(4 * v.size());
         build(1,1,v.size());
     }
     void build(T id, T l, T r){
@@ -91,8 +91,8 @@ struct ST_w_lz/*0-based*/{
         org.push_back(0);
         for(auto it : v) org.push_back(it);
         orz = v.size();
-        st.resize(4 * v.size());
-        lz.resize(4 * v.size());
+        st.assign(4 * v.size());
+        lz.assign(4 * v.size());
         build(1,1,v.size());
     }
     void build(T id, T l, T r){
@@ -157,7 +157,7 @@ struct STO{
     STO(vector<T> v){
         org = v;
         orz = org.size();
-        st.resize(2*orz);
+        st.assign(2*orz);
         for (int i=1; i<=orz; i++){
             update(i, org[i-1]);
         }
@@ -197,7 +197,7 @@ struct FT/*0-based*/{
     vector<T> org;
     T orz;
     FT(vector<T> v){
-        ft.resize(v.size());
+        ft.assign(v.size());
         org = v; orz = org.size();
         for (int i=0; i<org.size(); i++){
             update(i, org[i]);
@@ -230,7 +230,7 @@ struct FT/*0-based*/{
 struct DSU{
     using T = int;
     vector<T> d;
-    DSU(T n){ d.resize(n, -1);}
+    DSU(T n){ d.assign(n, -1);}
     inline T find(T u){ return d[u] < 0 ? u : d[u] = find(d[u]) ;}
     void link(T u, T v){
         u = find(u), v = find(v);
