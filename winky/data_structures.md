@@ -70,7 +70,8 @@ struct ST/*0-based*/{
 
 
 ```
-# Lazy Propagation
+
+## Lazy Propagation
 
 + Description: Segment tree with ability to add or set values of large intervals, and compute max of intervals.
 + Initialize with a 0-based vector
