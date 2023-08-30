@@ -39,6 +39,25 @@ ll modpownr(ll a, ll b){
 }
 ```
 
+## Euclidean algorithm
+```cpp
+using ll = long long;
+ll gcd(ll a, ll b){ return b?gcd(b,a%b):a; }
+inline ll lcm(ll a, ll b){ return (a*b)/gcd(a, b); }
+ll dio(ll a, ll b, ll &x, ll &y){
+    if (b == 0){
+        x = 1;
+        y = 0;
+        return a;
+    }
+    ll x1, y1;
+    ll d = dio(b, a%b, x1, y1);
+    x = y1;
+    y = x1 - y1*(a/b);
+    return d;
+}
+```
+
 ## Prime number
 ### The sieve of Eratosthenes
 + Description: Prime sieve for generating all primes smaller than LIM.
