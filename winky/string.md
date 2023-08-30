@@ -41,3 +41,36 @@ vector<string> split(string org, string pat){
     return res;
 }
 ```
+
+## Hash
+```cpp
+using ll = long long;
+ll mod = 1e9 + 7;/*random also ok*/
+struct T{
+    ll x;
+    T (ll x):x(x){}
+    T operator + (const T o){ return (x%mod+o.x%mod)%mod; }
+    T operator - (const T o){ return (x%mod-o.x%mod+mod)%mod; }
+    T operator * (const T o){ return (x%mod*o.x%mod)%mod; }
+};
+const T B = 31;
+struct Hash{
+    vector<T> ha, pw;
+    Hash(string s){
+        int n = s.length();
+        ha.assign(n + 9, 0);
+        pw.assign(n + 9, 0);
+        pw[0] = 1;
+        for (int i=0; i<n; i++){
+            ha[i+1] = ha[i] * B + s[i];
+            pw[i+1] = pw[i] * B;
+        }
+    }
+    T getHash(int l, int r){ return ha[r] - ha[l] * pw[r-l]; }
+};
+T hashString(string s){
+    T tmp = 0;
+    for (int i=0; i<s.length(); i++){ tmp=tmp*B+s[i]; }
+    return tmp;
+}
+```
