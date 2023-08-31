@@ -157,3 +157,55 @@ bool millerRabin(ll n){
     return res;
 }
 ```
+
+## Matrix
+```cpp
+#define vec vector
+#define sz(x) x.size()
+using ll = long long;
+const int md = 111539786;
+struct Matrix{
+    vec<vec<ll>> org;
+    int n, m;
+    Matrix(){}
+    Matrix(vec<vec<ll>> v){org=v;n=sz(v);m=sz(v[0]);}
+    Matrix(int _n, int _m){org.assign(n=_n,vec<ll>(m=_m));}
+    Matrix unit(int s){
+        Matrix mat(s, s);
+        for (int i=0; i<s; i++){ mat.org[i][i]=1; }
+        return mat;
+    }
+    Matrix operator * (const Matrix o){
+        assert(m == o.n);
+        Matrix mat(n, o.m);
+        for (int i=0; i<n; i++){
+            for (int j=0; j<o.m; j++){
+                for (int k=0; k<m; k++){
+                    mat.org[i][j] += (org[i][k]%md*o.org[k][j]%md)%md;
+                }
+            }
+        }
+        return mat;
+    }
+    Matrix operator ^ (int b){
+        if (!b) return unit(n);
+        assert(n == m);
+        Matrix tmp = org;
+        Matrix res = unit(n);
+        while (b > 0){
+            if (b & 1) res = res * tmp;
+            tmp = tmp * tmp;
+            b >>= 1;
+        }
+        return res;
+    }
+    void print(){
+        for (auto x : org){
+            for (auto y : x){
+                cout << y << ' ';
+            }
+            cout << '\n';
+        }
+    }
+};
+```
