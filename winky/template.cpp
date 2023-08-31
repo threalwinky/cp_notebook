@@ -47,7 +47,7 @@ freopen(OFI.c_str(),        "w", stdout);}}
 //Constants
 const ldb PI =              3.14159265358979;
 const int maxI =            INT_MAX;
-const int maxll =           LLONG_MAX;
+const ll maxll =            LLONG_MAX;
 const int N =               1e6;
 const int mod  =            1e9 + 7;
 mt19937 rng((uint32_t)chrono::steady_clock::now().time_since_epoch().count());
@@ -61,5 +61,17 @@ signed main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     opf(0);
-
+    ll T;
+    cin >> T;
+    while (T--){
+        ll t, k, n;
+        cin >> t >> k >> n;
+        if (n < t){
+            cout << 0;
+        }
+        else{
+            cout << ((n - t)/k)+1;
+        }
+        endl;
+    }
 }
