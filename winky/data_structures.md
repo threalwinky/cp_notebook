@@ -20,6 +20,43 @@ struct PS/*0-based*/{
 };
 ```
 
+## Sparse Table
+
++ Description: Sparse table with ability to add or set values of large intervals, and compute max of intervals.
++ Initialize with a 0-based vector
++ Spt.query : get range queries such as max query, min query
++ Time complexity : O(n log n)
++ Preprocess time complexity : O(n log n)
++ Query time complexity : O(1)
+
+```cpp
+inline int Log2(int n){ return 31-__builtin_clz(n); }
+struct Spt{
+    vector<vector<int>> spt;
+    vector<int> org;
+    Spt (vector<int> v){
+        int n = v.size();
+        org = v;
+        spt.assign(n, vector<int>(Log2(n)+1));
+        for (int i=0; i<n; i++){
+            spt[i][0] = i;
+        }
+        for (int j=1; (1 << j) <= n; j++){
+            for (int i=0; i + (1 << j) - 1 < n; i++){
+                if (v[spt[i][j-1]] < v[spt[i+(1 << (j-1))][j-1]])
+                    spt[i][j] = spt[i][j-1];
+                else spt[i][j] = spt[i+(1 << (j-1))][j-1];
+            }
+        }
+    }
+    int query(int l, int r){
+        int m = Log2(r-l+1);
+        return min(org[spt[l][m]], org[spt[r-(1<<m)+1][m]]);
+    }
+};
+```
+
+
 ## Segment Tree
 
 + Description: Segment tree with ability to add or set values of large intervals, and compute max of intervals.
