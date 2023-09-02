@@ -74,3 +74,61 @@ T hashString(string s){
     return tmp;
 }
 ```
+
+## Trie
+```cpp
+const int ALSZ = 26;
+struct Trie{
+    struct Node{
+        Node *child[ALSZ];
+        int ext, cnt;
+    };
+    Node *make(){
+        Node *node = new Node();
+        node -> ext = node -> cnt = 0;
+        for (int i=0; i<ALSZ; i++){
+            node -> child[i] = NULL;
+        }
+        return node;
+    }
+    Node *root = make();
+    void add(string s){
+        Node *node = root;
+        for (int i=0; i<s.length(); i++){
+            if (!node -> child[s[i]-'a'])
+                node->child[s[i]-'a']=make();
+            node = node -> child[s[i]-'a'];
+        }
+        node -> ext|=1;
+        node -> cnt++;
+    }
+    void remove(string s){
+        Node *node = root;
+        for (int i=0; i<s.length(); i++){
+            if (!node -> child[s[i]-'a'])
+                return;
+            node = node -> child[s[i]-'a'];
+        }
+        node -> ext&=0;
+        node -> cnt--;
+    }
+    bool find(string s){
+        Node *node = root;
+        for (int i=0; i<s.length(); i++){
+            if (!node -> child[s[i]-'a'])
+                return 0;
+            node = node -> child[s[i]-'a'];
+        }
+        return node -> ext;
+    }
+    int count(string s){
+        Node *node = root;
+        for (int i=0; i<s.length(); i++){
+            if (!node -> child[s[i]-'a'])
+                return 0;
+            node = node -> child[s[i]-'a'];
+        }
+        return node -> cnt;
+    }
+};
+```

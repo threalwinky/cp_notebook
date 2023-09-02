@@ -24,13 +24,17 @@ using vii =                 V<ii>;
 using vstr =                V<str>;
 //Vector functions
 #define sz(x)               (int)(x.size())
-#define bg(x)               begin(x)
-#define all(x)              begin(x), end(x)
+#define bg(x)               x.begin
+#define all(x)              bg(x), x.end
+#define rall(x)             x.rbegin(), x.rend()
+#define grt                 greater<int>()
 #define ft                  front
 #define bk                  back
 #define pb                  push_back
-#define lb                  lower_bound
-#define ub                  upper_bound
+#define lb(v,x)             lower_bound(all(v),x)
+#define ub(v,x)             upper_bound(all(v),x)
+#define ld(v,x)             lower_bound(rall(v),x,grt);
+#define ud(v,x)             upper_bound(rall(v),x,grt);
 //Loops
 #define FOR(i,a,b)          for (int i=(a); i<(b); i++)
 #define FORD(i,a,b)         for (int i=(a)-1; i>=(b); i--)
@@ -59,19 +63,7 @@ mt19937 rng((uint32_t)chrono::steady_clock::now().time_since_epoch().count());
 //------------------------------------------------------------------------------------
 signed main(){
     ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+    cin.tie(NULL);
     opf(0);
-    ll T;
-    cin >> T;
-    while (T--){
-        ll t, k, n;
-        cin >> t >> k >> n;
-        if (n < t){
-            cout << 0;
-        }
-        else{
-            cout << ((n - t)/k)+1;
-        }
-        endl;
-    }
+    
 }
