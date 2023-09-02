@@ -1,4 +1,5 @@
 # Geometry
+
 ## Point
 ```cpp
 const ldb PI = 3.14159265358979;
@@ -55,4 +56,71 @@ struct Vector{
         return os;
     }
 };
+```
+
+## Line
+```cpp
+struct Line{
+    ldb a=0, b=0, c=0;
+    Line(){}
+    Line(ldb a, ldb b, ldb c):a(a), b(b), c(c){}
+    Line(Point x, Point y){
+        a = y.y - x.y;
+        b = x.x - y.x;
+        c = -a*x.x-b*x.y;
+    }
+    Line(Point x, Vector y){
+        a = y.a;
+        b = y.b;
+        c = -y.a*x.x - y.b*x.y;
+    }
+    ldb distP(const Point x){
+        return abs(a*x.x+b*x.y+c)/sqrt(a*a+b*b); }
+    ldb have(const Point x){
+        return distP(x) == 0; }
+    friend ostream& operator << (ostream &os, Line a){
+        os << "Line( " << a.a << ", " << a.b << ", " << a.c << " )";
+        return os;
+    }
+};
+```
+## Ray
++ Same as line but distP have difference
+```cpp
+ldb distP(ldb xa, ya, xb, yb, xc, yc){
+    Point a(xa, ya);
+    Point b(xb, yb);
+    Point c(xc, yc);
+    Vector ba(b, a);
+    Vector bc(b, c);
+    Line lbc(b, c);
+    if (ba.dotProduct(bc) < 0){
+        return a.Edist(b);
+    }
+    return lbc.distP(a);
+}
+```
+## Segment
++ Same as line but distP have difference
+```cpp
+ldb distP(ldb xa, ya, xb, yb, xc, yc){
+    Point a(xa, ya);
+    Point b(xb, yb);
+    Point c(xc, yc);
+    Vector ba(b, a);
+    Vector bc(b, c);
+    Vector ca(c, a);
+    Vector cb(c, b);
+    Line lbc(b, c);
+    if (ba.dotProduct(bc) && ca.dotProduct(cb)){
+        return lbc.distP(a);
+    }
+    else{
+        if (ba.dotProduct(bc) < 0){
+            return b.Edist(a);
+        }
+            return c.Edist(a);
+    }
+    return 0;
+}
 ```
