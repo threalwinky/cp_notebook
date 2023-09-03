@@ -175,6 +175,24 @@ FORE(P, p){
 if (fans > sans) swap(fans, sans);
 ```
 
+## Polygon
+```cpp
+struct Polygon{
+    V<Point> p;
+    Polygon(){};
+    Polygon(V<Point> p):p(p){}
+    ldb area(){
+        ldb a = 0;
+        int l = p.size() - 1;
+        for (int i=0; i<l; i++){
+            a += p[i].x*p[i+1].y-p[i].y*p[i+1].x;
+        }
+        a += p[l].x*p[0].y-p[l].y*p[0].x;
+        return a/2;
+    }
+};
+```
+
 ## Convex hull use monotone chain algorithm
 ```cpp
 V<Point> convex_hull(V<Point> p, int n){
