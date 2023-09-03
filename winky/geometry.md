@@ -78,6 +78,12 @@ struct Line{
         return abs(a*x.x+b*x.y+c)/sqrt(a*a+b*b); }
     ldb have(const Point x){
         return distP(x) == 0; }
+    pair<ldb, ldb> Intersect(const Line o){
+        pair<ldb, ldb> res;
+        res.se = (a*o.c-c*o.a)/(-a*o.b+b*o.a);
+        res.fi = (-b*res.se-c)/a;
+        return res;
+    }
     friend ostream& operator << (ostream &os, Line a){
         os << "Line( " << a.a << ", " << a.b << ", " << a.c << " )";
         return os;
