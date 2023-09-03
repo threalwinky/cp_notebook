@@ -10,14 +10,18 @@ struct Point{
     Point(){}
     Point(ldb x, ldb y):x(x), y(y){}
     ldb Edist(const Point o){
-        return sqrt(pow((x-o.x),2)+pow((y-o.y),2));
+        return sqrt((x-o.x)*(x-o.x)+(y-o.y)*(y-o.y));
     }
+    ldb squareEdist(const Point o){
+        return (x-o.x)*(x-o.x)+(y-o.y)*(y-o.y); }
     ldb Mdist(const Point o){
         return abs(x-o.x)+abs(y-o.y);
     }
     Point Mpoint(const Point o){
         return Point((x+o.x)/2, (y+o.y)/2);
     }
+    bool ccw(const Point n, const Point m){
+        return (n.x-x)*(m.y-y)-(m.x-x)*(n.y-y) > 0; }
     bool operator == (const Point o){
         return eq(x,o.x) & eq(y,o.y);
     }
@@ -84,6 +88,8 @@ struct Line{
         res.fi = (-b*res.se-c)/a;
         return res;
     }
+    Line perpendicularBisector (const Point o){
+        return Line (-b, a, b*o.x-a*o.y); }
     friend ostream& operator << (ostream &os, Line a){
         os << "Line( " << a.a << ", " << a.b << ", " << a.c << " )";
         return os;
@@ -128,5 +134,73 @@ ldb distP(ldb xa, ya, xb, yb, xc, yc){
             return c.Edist(a);
     }
     return 0;
+}
+```
+
+## Sweep Line
+### Closest Point Pair
+```cpp
+V <Point> p;
+set<Point, cmp> t;
+for (int i=0; i<n; i++){
+    ldb x, y;
+    cin >> x >> y;
+    p.push_back(Point(x, y, i));
+}
+sort(p.begin(), p.end());
+ldb max_dist = p[0].squareEdist(p[1]);
+int fans = 0, sans = 1;
+FORE(P, p){
+    ldb x = P.x, y = P.y;
+    int idx = P.idx;
+    ldb d = sqrt(max_dist);
+    Point cur = {-1000005, y-d, idx};
+    while (1){
+        auto it = t.upper_bound(cur);
+        if (it == t.end()) break;
+        cur = *it;
+        if (cur.y > y+d) break;
+        if (cur.x < x - d){
+            t.erase(it);
+            continue;
+        }
+        if (P.squareEdist(cur) < max_dist){
+            max_dist = P.squareEdist(cur);
+            fans = idx;
+            sans = cur.idx;
+        }
+    }
+    t.insert(P);
+}
+if (fans > sans) swap(fans, sans);
+```
+
+## Convex hull use monotone chain algorithm
+```cpp
+V<Point> convex_hull(V<Point> p, int n){
+    sort(p.begin(), p.end(),
+         [](const Point a, const Point b){
+            return ((eq(a.x, b.x))?(a.y<b.y):(a.x<b.x));
+         });
+    V<Point> hull;
+    hull.pb(p[0]);
+    /*Top hull*/
+    for (int i=1; i<n; i++){
+        while (hull.size()>=2 &&
+            hull[hull.size()-2].ccw(hull.back(), p[i])){
+                hull.pop_back();
+            }
+        hull.push_back(p[i]);
+    }
+    /*Bottom hull*/
+    for (int i=n-2; i>=0; --i){
+        while (hull.size()>=2&&
+            hull[hull.size()-2].ccw(hull.back(), p[i])){
+                hull.pop_back();
+            }
+        hull.push_back(p[i]);
+    }
+    if (n > 1) hull.pop_back();
+    return hull;
 }
 ```
