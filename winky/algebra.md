@@ -18,3 +18,5 @@ vec<ldb> Qe(ldb a, ldb b, ldb c){
 ```
 ## Cubic equation
 ![Alt text](./img/image.png)
+
+## Fibonacci number

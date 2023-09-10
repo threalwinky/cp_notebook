@@ -24,8 +24,8 @@ using vii =                 V<ii>;
 using vstr =                V<str>;
 //Vector functions
 #define sz(x)               (int)(x.size())
-#define bg(x)               x.begin
-#define all(x)              bg(x), x.end
+#define bg(x)               x.begin()
+#define all(x)              bg(x), x.end()
 #define rall(x)             x.rbegin(), x.rend()
 #define grt                 greater<int>()
 #define ft                  front

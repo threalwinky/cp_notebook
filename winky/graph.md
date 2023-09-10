@@ -32,3 +32,7 @@ void bfs(int u){
     }
 }
 ```
+## Dijkstra (Shortest path)
+```
+
+```
