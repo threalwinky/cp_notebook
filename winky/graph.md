@@ -132,3 +132,24 @@ vll shortest_path(int s){
     return d;
 }
 ```
+
+## Topological Sort
+```cpp
+vi adj[100006];
+vi tmp;
+vb check(100006, 0);
+void dfs(int u){
+    check[u] = 1;
+    tmp.push_back(u);
+    for (auto x : adj[u]){
+        if (!check[x]) dfs(x);
+    }
+}
+
+vi topo(int n){
+    for (int i=1; i<=n; i++){
+        if (!check[i]) dfs(i);
+    }
+    return tmp;
+}
+```
