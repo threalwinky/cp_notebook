@@ -32,7 +32,103 @@ void bfs(int u){
     }
 }
 ```
-## Dijkstra (Shortest path)
-```
 
+## Minimum Spanning Tree
+```cpp
+struct Edge{
+    int u, v, w;
+};
+vector<Edge> E;
+struct DSU{
+    vi par, sz;
+    void init(int n){
+        par.assign(n + 9, 0);
+        sz.assign(n + 9, 0);
+        for (int i=1; i<=n; i++){
+            par[i] = i;
+            sz[i] = 1;
+        }
+    }
+    int find(int u){
+        return (u == par[u])?u:(par[u]=find(par[u]));
+    }
+    bool join(int u, int v){
+        u = find(u), v = find(v);
+        if (u == v) return 0;
+        if (sz[u] < sz[v]) swap(u, v);
+        par[v] = u;
+        sz[u] += sz[v];
+        return 1;
+    }
+};
+bool cmp(Edge a, Edge b){
+    return a.w < b.w;
+}
+signed main(){
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    opf(0);
+    int n, m;
+    cin >> n >> m;
+    for (int i=0; i<m; i++){
+        int u, v, w;
+        cin >> u >> v >> w;
+        E.push_back({u, v, w});
+    }
+    sort(E.begin(), E.end(), cmp);
+    DSU dsu;
+    dsu.init(n);
+    int ans = 0;
+    for (auto it : E){
+        if (!dsu.join(it.u, it.v)){ continue; }
+        ans += it.w;
+    }
+    cout << ans;
+}
+
+```
+## Dijkstra (Shortest path)
+```cpp
+struct Edge{
+    int v;
+    ll w;
+};
+
+struct Node{
+    int u;
+    ll D_u;
+};
+
+struct cmp{
+    bool operator () (const Node a, const Node b){
+        return a.D_u > b.D_u;
+    }
+};
+
+V<Edge> E[100009];
+vll d(100009, maxll);
+vi trace(100009, -1);
+vll shortest_path(int s){
+    V<bool> P(100009, 0);
+    priority_queue<Node, V<Node>, cmp> pq;
+    d[s] = 0;
+    pq.push({s, d[s]});
+    while (!pq.empty()){
+        Node x = pq.top();
+        pq.pop();
+        int u = x.u;
+        if (P[u]) continue;
+        P[u] = 1;
+        for (auto e : E[u]){
+            int v = e.v;
+            ll w = e.w;
+            if (d[v] > d[u] + w){
+                d[v] = d[u] + w;
+                pq.push({v, d[v]});
+                trace[v] = u;
+            }
+        }
+    }
+    return d;
+}
 ```
