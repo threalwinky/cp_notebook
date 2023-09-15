@@ -153,3 +153,42 @@ vi topo(int n){
     return tmp;
 }
 ```
+
+## Kosaraju (Strong Connected Components)
+
+```cpp
+vi adj[100006], radj[100006];
+vb check(100006, 0);
+stack<int> st;
+int cnt = 0, c = 0;
+
+void dfs(int u, int p){
+    check[u] = 1;
+    for (auto it : p ? adj[u] : radj[u]){
+        if (!check[it]){
+            dfs(it, p);
+        }
+    }
+    if (p) st.push(u);
+    return;
+}
+
+int scc(int n){
+    for (int i=1; i<=n; i++){
+        if (!check[i]){
+            dfs(i, 1);
+        }
+    }
+    check.assign(100006, 0);
+    int ans = 0;
+    while (!st.empty()){
+        int t = st.top();
+        if (!check[t]){
+            dfs(t, 0);
+            ans++;
+        }
+        st.pop();
+    }
+    return ans;
+}
+```
