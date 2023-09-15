@@ -154,7 +154,7 @@ vi topo(int n){
 }
 ```
 
-## Kosaraju (Strong Connected Components)
+## Kosaraju (Strongly Connected Components)
 
 ```cpp
 vi adj[100006], radj[100006];
