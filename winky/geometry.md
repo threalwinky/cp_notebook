@@ -175,8 +175,10 @@ FORE(P, p){
 if (fans > sans) swap(fans, sans);
 ```
 
-## Polygon
+## Polygon]
+![Alt text](./img/pol_area.png)
 ```cpp
+
 struct Polygon{
     V<Point> p;
     Polygon(){};

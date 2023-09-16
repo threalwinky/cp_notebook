@@ -17,6 +17,6 @@ vec<ldb> Qe(ldb a, ldb b, ldb c){
 }
 ```
 ## Cubic equation
-![Alt text](./img/image.png)
+![Alt text](./img/cef.png)
 
 ## Fibonacci number

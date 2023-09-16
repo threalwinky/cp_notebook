@@ -33,7 +33,7 @@ void bfs(int u){
 }
 ```
 
-## Minimum Spanning Tree
+## Kruskal (Minimum Spanning Tree)
 ```cpp
 struct Edge{
     int u, v, w;
@@ -191,4 +191,11 @@ int scc(int n){
     }
     return ans;
 }
+```
+
+## DFS Tree
+```cpp
+
+
+
 ```
