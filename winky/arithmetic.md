@@ -39,6 +39,47 @@ ll modpownr(ll a, ll b){
 }
 ```
 
+## Modular Inverse
+```cpp
+/*using Extended Euclidean*/
+
+ll gcd(ll a, ll b, ll &x, ll &y){
+    if (b == 0){
+        x = 1;
+        y = 0;
+        return a;
+    }
+    ll x1, y1;
+    ll d = gcd(b, a%b, x1, y1);
+    x = y1;
+    y = x1 - (a/b)*x;
+    return d;
+}
+
+ll mod_inv(ll a, ll m){
+    ll x, y;
+    ll g = gcd(a, m, x, y);
+    assert(g == 1);
+    return (x%m + m)%m;
+}
+
+/*using fast power*/
+ll supow(ll a, ll b, ll m){
+    ll res = 1;
+    while (b > 0){
+        if (b & 1) res = (res%m*a%m)%m;
+        a = (a%m*a%m)%m;
+        b >>= 1;
+    }
+    return res%m;
+}
+/*replace m-2 with phi(m) - 1 if m is not a prime number*/
+ll mod_inv(ll a, ll m){
+    return supow(a, m-2, m);
+}
+```
+
+
 ## Euclidean algorithm
 ```cpp
 using ll = long long;
@@ -208,4 +249,34 @@ struct Matrix{
         }
     }
 };
+```
+
+## Euler's totient function
+```cpp
+int phi(int n){
+    int res = n;
+    for (int i=2; i<=sqrt(n); i++){
+        if (n % i == 0){
+            while (n % i == 0){
+                n /= i;
+            }
+            res -= res/i;
+        }
+    }
+    if (n != 1) res -= res/n;
+    return res;
+}
+
+/*using the sieve of eratosthenes*/
+int f[N];
+void sieve(){
+    for (int i=1; i<=N; i++) f[i] = i/(i%2?1:2);
+    for (int i=3; i<=N; i++){
+        if (f[i] == i){
+            for (int j=i; j<=N; j+=i){
+                f[j] = f[j]/i*(i-1);
+            }
+        }
+    }
+}
 ```
