@@ -154,48 +154,36 @@ vector<int> eratosthenesSieve(int lim){
     return res;
 }
 ```
-### Fermat's little theorem
+### Miller-rabin algorithm
 ```cpp
-using ll = unsigned long long;
-ll mulMod(ll a, ll b, ll m){
-    a%=m;
-    ll res = 0;
-    while (b > 0){
-        if (b & 1) res = (res%m + a%m) % m;
-        a = (a%m + a%m) % m;
-        b >>= 1;
-    }
-    return res%m;
-}
-
-ll powMod(ll a, ll b, ll m){
-    a%=m;
+ll supow(ll a, ll b, ll m){
+    a %= m;
     ll res = 1;
-    while (b > 0){
-        if (b & 1) res = mulMod(res,a,m);
-        a = mulMod(a,a,m);
+    while (b != 0){
+        if (b & 1) res = (res%m*a%m)%m;
+        a = (a%m*a%m)%m;
         b >>= 1;
     }
     return res;
 }
 
-bool millerRabin(ll n){
-    const ll psz = 12, p[]={2,3,5,7,11,13,17,19,23,29,31,37};
-    for (int i=0; i<psz; i++){
-        if (n % p[i] == 0) return n == p[i];
+ll test(ll s, ll d, ll n, ll a){
+    if (n == a) return 1;
+    ll p = supow(a, d, n);
+    if (p == 1) return 1;
+    for (;s>0;s--){
+        if (p == n-1) return 1;
+        p = (p%n*p%n)%n;
     }
-    if (n < p[psz - 1]) return 0;
-    ll res = 1, s = 0, t;
-    for (t = n-1; ~t&1; t>>=1, s++);
-    for (ll i =0; i<psz && res; i++){
-        ll a = powMod(p[i], t, n);
-        if (a != 1){
-            for (int b=s; b-- && (res = a + 1 != n);)
-                a = mulMod(a, a, n);
-            res = !res;
-        }
-    }
-    return res;
+    return 0;
+}
+
+ll prime(ll n){
+    if (n < 2) return 0;
+    if (!(n&1)) return n == 2;
+    ll s = __builtin_ctz(n-1);
+    ll d = (n-1) >> s;
+    return test(s, d, n, 2) && test(s, d, n, 3);
 }
 ```
 
