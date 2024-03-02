@@ -193,9 +193,54 @@ int scc(int n){
 }
 ```
 
-## DFS Tree
+## DFS Tree(Cuts, Bridges, Strongly Connected Components)
 ```cpp
 
+vector<int> adj[N];
+vector<int> low(N);
+vector<int> num(N);
+vector<int> tail(N);
+vector<bool> check(N);
+vector<bool> deleted(N);
+set<int> s;
+stack<int> st;
+int T = 0, scc = 0;
+int bcnt = 0;
+void dfs(int u, int p=-1){
+    num[u] = low[u] = ++T;
+    check[u] = 1;
+    st.push(u);
+    int c = 0;
+    for (auto v : adj[u]){
+        /*undirected graph*/ 
+        if (v == p) continue;
+        /*directed graph*/   
+        if (deleted[v]) continue;
+        
+        if (!check[v]){
+            dfs(v, u);
+            low[u] = min(low[u], low[v]);
+            if (low[v] > num[u]) bcnt++;
+            if (low[v] >= num[u] && p!=-1) 
+            s.insert(u);
+            c++;
+        }
+        else{
+            low[u] = min(low[u], num[v]);
+        }     
+    }
+    if (p==-1 && c > 1) s.insert(u);
+    if (low[u] == num[u]){
+        scc++;
+        int v;
+        do {
+            v = st.top();
+            st.pop();
+            deleted[v] = 1;
+        } while (v != u);
+    }
+    tail[u] = T;
+}
 
 
 ```

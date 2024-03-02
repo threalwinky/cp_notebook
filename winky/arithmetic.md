@@ -120,7 +120,7 @@ const int maxP = 5000000;
 bool isP[maxP];
 vector<int> eratosthenesSieve(int lim){
     for (int i=2; i*i<lim; i++){
-        if (!isP[i]){
+        if (!iEuclideansP[i]){
             for (int j=2*i; j<lim; j+=i){
                 isP[j] = 1;
             }

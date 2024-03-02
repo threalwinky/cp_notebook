@@ -1,3 +1,4 @@
+/*old*/
 #include                    <bits/stdc++.h>
 using                       namespace std;
 #define fi                  first
@@ -65,5 +66,27 @@ signed main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     opf(0);
+    
+}
+
+
+/*new*/
+#include<bits/stdc++.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdbool.h>
+using namespace std;
+#define int long long
+const int N = 1e6 + 9;
+const int N2 = N*10;
+const int mod = 1e9 + 7;
+const int inf = LLONG_MAX;
+
+signed main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    if (access("TASK.INP", F_OK) == 0){
+    freopen("TASK.INP", "r", stdin);
+    freopen("TASK.OUT", "w", stdout);}
     
 }
