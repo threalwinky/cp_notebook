@@ -90,3 +90,11 @@ signed main() {
     freopen("TASK.OUT", "w", stdout);}
     
 }
+
+{
+    "key": "ctrl+b",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "g++ '${file}' && ./a.out \u000D"
+    }
+  }
