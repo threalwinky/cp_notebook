@@ -71,23 +71,26 @@ signed main(){
 
 
 /*new*/
-#include<bits/stdc++.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdbool.h>
+#include <bits/stdc++.h>
 using namespace std;
 #define int long long
+#define fi first
+#define se second
 const int N = 1e6 + 9;
-const int N2 = N*10;
+const int N2 = N * 10;
 const int mod = 1e9 + 7;
 const int inf = LLONG_MAX;
 
-signed main() {
+
+
+signed main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    if (access("TASK.INP", F_OK) == 0){
+    if (fopen("TASK.INP", "r")){
     freopen("TASK.INP", "r", stdin);
     freopen("TASK.OUT", "w", stdout);}
+    
+
     
 }
 
